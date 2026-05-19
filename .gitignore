@@ -1,0 +1,13 @@
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Node (se necessário)
+node_modules/
+
+# VSCode
+.vscode/
+
+# OneDrive temp
+~$*
