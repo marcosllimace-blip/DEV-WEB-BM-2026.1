@@ -1,4 +1,10 @@
-# SENTINELA UV
+# DEV-WEB-BM-2026.1
+
+Repositório do curso DEV-WEB-BM-2026.1.
+
+Este repositório também contém um projeto local chamado "SENTINELA UV" com uma página simples.
+
+## SENTINELA UV
 
 Projeto simples contendo a página `front.html`.
 
