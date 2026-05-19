@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Nav com Flexbox</title>
+    <style>
+        /* ESTILO DO NAV */
+        nav {
+            display: flex;                      /* ATIVA FLEXBOX */
+            justify-content: space-between;     /* ESPALHA OS GRUPOS */
+            align-items: center;                /* ALINHA VERTICALMENTE */
+            background-color: #f0f0f0;
+            padding: 15px;
+        }
+        
+        nav a {
+            margin-right: 20px;
+            text-decoration: none;
+            color: black;
+        }
+        
+        /* Último link do grupo direita não precisa de margem direita */
+        .direita a {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="esquerda">
+            <a href="#">Home</a>
+            <a href="#">Sobre</a>
+            <a href="#">Serviços</a>
+        </div>
+
+        <div class="direita">
+            <a href="#">Contato</a>
+        </div>
+    </nav>
+
+</body>
+</html>
