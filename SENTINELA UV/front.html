@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prevenção Solar - Monitoramento UV</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <style>
         /* Estilos personalizados para deixar a página mais atraente */
         .hero-section {
@@ -53,7 +53,7 @@
     </header>
 
     <main class="container">
-        
+
         <section class="row mb-5">
             <div class="col-12 text-center mb-4">
                 <h2 class="fw-bold text-primary">Entenda os Riscos</h2>
@@ -88,7 +88,7 @@
                         <h3 class="mb-0">Calculadora de Exposição Segura</h3>
                     </div>
                     <div class="card-body p-4">
-                        
+
                         <form id="formCalculadora">
                             <div class="mb-3">
                                 <label for="fototipo" class="form-label fw-bold">1. Qual o seu tipo de pele (Fototipo)?</label>
@@ -103,13 +103,21 @@
                                 </select>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="ambiente" class="form-label fw-bold">2. Onde você está exposto ao sol?</label>
+                                <select class="form-select" id="ambiente" required>
+                                    <option value="urbano" selected>Cidade / Grama / Asfalto (Reflexão Padrão)</option>
+                                    <option value="praia">Praia / Areia Clara (Reflete +20% de radiação UV)</option>
+                                </select>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="fps" class="form-label fw-bold">2. Fator de Proteção (FPS):</label>
+                                    <label for="fps" class="form-label fw-bold">3. Fator de Proteção (FPS):</label>
                                     <input type="number" class="form-control" id="fps" value="30" min="1" max="100" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="indiceUv" class="form-label fw-bold">3. Índice UV Atual da Cidade:</label>
+                                    <label for="indiceUv" class="form-label fw-bold">4. Índice UV Atual da Cidade:</label>
                                     <input type="number" class="form-control" id="indiceUv" value="11" min="1" max="15" required>
                                 </div>
                             </div>
@@ -123,6 +131,7 @@
                             <hr>
                             <h4 class="text-secondary">Tempo Máximo Sugerido:</h4>
                             <p class="resultado-destaque text-danger" id="textoTempo">0 Minutos</p>
+                            <div id="alertaAmbiente" class="text-muted small mb-2 fw-bold"></div>
                             <div class="alert alert-info mt-3" role="alert">
                                 <strong>Nota Médica:</strong> O sistema limita a exposição máxima contínua a 120 minutos, pois o suor, a água e o atrito exigem a reaplicação do protetor solar após esse período, independentemente do Fototipo.
                             </div>
@@ -133,7 +142,6 @@
             </div>
         </section>
 
-        <!-- SEÇÃO ADICIONADA: Consulta de Gráfico -->
         <section class="row justify-content-center mb-5">
             <div class="col-lg-10">
                 <div class="card shadow border-success">
@@ -141,7 +149,6 @@
                         <h3 class="mb-0">Consulta e Comparação de Dados UV</h3>
                     </div>
                     <div class="card-body p-4">
-                        <!-- Navegação das Abas -->
                         <ul class="nav nav-tabs nav-justified mb-4" id="abasGrafico" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="aba-diario" data-tipo="diario" type="button" onclick="alterarAba('diario')">Diário</button>
@@ -154,18 +161,15 @@
                             </li>
                         </ul>
 
-                        <!-- Conteúdo das Abas -->
                         <div class="aba-conteudo ativa" id="conteudo-diario">
                             <div class="grafico-container">
                                 <div class="w-100 text-center">
                                     <h5>Gráfico de Índice UV - Diário</h5>
                                     <p class="text-muted">Variação do índice ao longo das 24 horas</p>
-                                    <!-- Simulação de gráfico -->
                                     <div class="bg-white p-3 rounded shadow-sm mb-3">
                                         <img src="https://via.placeholder.com/800x250.png?text=Gráfico+Diário+-+Índice+UV+x+Hora" alt="Gráfico diário" class="img-fluid rounded">
                                     </div>
-                                    
-                                    <!-- Dados de comparação -->
+
                                     <div class="row dados-comparacao g-3">
                                         <div class="col-md-4">
                                             <div class="card bg-light">
@@ -201,12 +205,10 @@
                                 <div class="w-100 text-center">
                                     <h5>Gráfico de Índice UV - Semanal</h5>
                                     <p class="text-muted">Variação do índice por dia da semana</p>
-                                    <!-- Simulação de gráfico -->
                                     <div class="bg-white p-3 rounded shadow-sm mb-3">
                                         <img src="https://via.placeholder.com/800x250.png?text=Gráfico+Semanal+-+Índice+UV+x+Dia+da+Semana" alt="Gráfico semanal" class="img-fluid rounded">
                                     </div>
-                                    
-                                    <!-- Dados de comparação -->
+
                                     <div class="row dados-comparacao g-3">
                                         <div class="col-md-4">
                                             <div class="card bg-light">
@@ -242,12 +244,10 @@
                                 <div class="w-100 text-center">
                                     <h5>Gráfico de Índice UV - Mensal</h5>
                                     <p class="text-muted">Variação do índice por dia do mês</p>
-                                    <!-- Simulação de gráfico -->
                                     <div class="bg-white p-3 rounded shadow-sm mb-3">
                                         <img src="https://via.placeholder.com/800x250.png?text=Gráfico+Mensal+-+Índice+UV+x+Dia+do+Mês" alt="Gráfico mensal" class="img-fluid rounded">
                                     </div>
-                                    
-                                    <!-- Dados de comparação -->
+
                                     <div class="row dados-comparacao g-3">
                                         <div class="col-md-4">
                                             <div class="card bg-light">
@@ -287,12 +287,13 @@
 
     <script>
         function calcularTempo() {
-            // 1. Coleta os valores que o usuário digitou/selecionou na tela
+            // 1. Coleta os valores do formulário
             const fototipoSelecionado = parseInt(document.getElementById('fototipo').value);
+            const ambienteSelecionado = document.getElementById('ambiente').value;
             const valorFps = parseInt(document.getElementById('fps').value);
-            const valorUv = parseInt(document.getElementById('indiceUv').value);
+            const valorUv = parseFloat(document.getElementById('indiceUv').value);
 
-            // Validação de segurança: verifica se a pessoa escolheu um fototipo
+            // Validação de segurança
             if (isNaN(fototipoSelecionado)) {
                 alert("Por favor, selecione o seu tipo de pele.");
                 return;
@@ -308,10 +309,47 @@
                 6: 400
             };
 
-            // 3. O Cálculo Matemático Científico
-            let tempoSemProtecao = temposBase[fototipoSelecionado] / valorUv;
+            // 3. Aplicação do Fator de Albedo (Reflexão Ambiental)
+            // Se estiver na praia, o ambiente potencializa a absorção UV em 20% (fator 1.2)
+            let fatorSuperficie = 1.0;
+            let textoMensagemAmbiente = "Cálculo baseado em reflexão padrão de superfície.";
+            
+            if (ambienteSelecionado === 'praia') {
+                fatorSuperficie = 1.2;
+                textoMensagemAmbiente = "⚠️ Atenção: Tempo reduzido em 20% devido ao reflexo solar na areia da praia (Albedo).";
+            }
+
+            // 4. O Cálculo Matemático Científico Atualizado
+            // O Índice UV efetivo aumenta por conta do reflexo do chão
+            let indiceUvEfetivo = valorUv * fatorSuperficie;
+            
+            let tempoSemProtecao = temposBase[fototipoSelecionado] / indiceUvEfetivo;
             let tempoComProtecao = tempoSemProtecao * valorFps;
 
-            // 4. A Restrição Médica das 2 horas
-            if (tempoComProtecao > 120) {
-                tempoComProte
+            // Arredonda para um número inteiro amigável
+            let tempoFinal = Math.round(tempoComProtecao);
+
+            // 5. A Restrição Médica das 2 horas
+            if (tempoFinal > 120) {
+                tempoFinal = 120;
+            }
+
+            // 6. Renderização do resultado na tela
+            document.getElementById('textoTempo').innerText = tempoFinal + " Minutos";
+            document.getElementById('alertaAmbiente').innerText = textoMensagemAmbiente;
+            document.getElementById('areaResultado').classList.remove('d-none');
+        }
+
+        // Função para alternar o comportamento visual e lógico das abas de gráficos
+        function alterarAba(tipoAba) {
+            // Remove a classe ativa de todos os botões e conteúdos
+            document.querySelectorAll('#abasGrafico .nav-link').forEach(botao => botao.classList.remove('active'));
+            document.querySelectorAll('.aba-conteudo').forEach(conteudo => conteudo.classList.remove('ativa'));
+
+            // Ativa o botão correto e exibe o respectivo contêiner
+            document.getElementById('aba-' + tipoAba).classList.add('active');
+            document.getElementById('conteudo-' + tipoAba).classList.add('ativa');
+        }
+    </script>
+</body>
+</html>
