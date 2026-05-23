@@ -1,0 +1,426 @@
+DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prevenção Solar - Monitoramento UV</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Estilos personalizados para deixar a página mais atraente */
+        .hero-section {
+            /* Imagem de fundo do topo da página */
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 5px solid #ffc107;
+        }
+        .card-img-top {
+            height: 220px;
+            object-fit: cover; /* Evita que a imagem fique esticada */
+        }
+        .resultado-destaque {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        /* Novo estilo para a seção de gráfico */
+        .grafico-container {
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            border-radius: 0.375rem;
+            padding: 20px;
+        }
+        .dados-comparacao {
+            margin-top: 20px;
+        }
+        .fototipo-escala {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .fototipo-item {
+            flex: 1 1 120px;
+            min-width: 120px;
+            background: #ffffff;
+            border-radius: 1rem;
+            border: 1px solid rgba(0,0,0,.08);
+            padding: 0.75rem 0.75rem 0.85rem;
+            text-align: center;
+            box-shadow: 0 6px 16px rgba(0,0,0,.05);
+        }
+        .fototipo-bola {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            margin: 0 auto 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,.12);
+        }
+        .fototipo-item strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+        .fototipo-detalhe {
+            font-size: 0.82rem;
+            color: #555;
+        }
+        .aba-conteudo {
+            display: none;
+        }
+        .aba-conteudo.ativa {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <header class="hero-section mb-5">
+        <h1 class="display-4 fw-bold">Saúde da Pele & Prevenção UV</h1>
+        <p class="lead">Monitoramento inteligente para exposição solar segura baseado no seu fototipo.</p>
+    </header>
+
+    <main class="container">
+
+        <section class="row mb-5">
+            <div class="col-12 text-center mb-4">
+                <h2 class="fw-bold text-primary">Entenda os Riscos</h2>
+                <p class="text-muted">A informação é a sua primeira camada de proteção solar.</p>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Pessoa aplicando protetor solar">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">O que é o Eritema Solar?</h5>
+                        <p class="card-text">O eritema é a inflamação da pele (vermelhidão) causada pela exposição excessiva à radiação ultravioleta. É o primeiro sinal visível de dano ao DNA celular, aumentando os riscos de desenvolvimento de doenças dermatológicas a longo prazo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1584362917165-526a968579e8?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Vários tons de pele representando diferentes fototipos">
+                    <div class="card-body">
+                        <h5 class="card-title text-info">A Importância do Fototipo</h5>
+                        <p class="card-text">A escala de Fitzpatrick classifica a pele em 6 tipos com base na quantidade de melanina. Peles mais claras (Tipos I e II) possuem menor resistência natural e queimam rapidamente, enquanto peles mais escuras (Tipos IV a VI) têm maior tolerância.</p>
+                        <div class="fototipo-escala">
+                            <div class="fototipo-item">
+                                <div class="fototipo-bola" style="background:#f7d0c7;">I</div>
+                                <strong>Tipo I</strong>
+                                <div class="fototipo-detalhe">Muito clara</div>
+                            </div>
+                            <div class="fototipo-item">
+                                <div class="fototipo-bola" style="background:#e9b39b;">II</div>
+                                <strong>Tipo II</strong>
+                                <div class="fototipo-detalhe">Clara</div>
+                            </div>
+                            <div class="fototipo-item">
+                                <div class="fototipo-bola" style="background:#ce8f6f;">III</div>
+                                <strong>Tipo III</strong>
+                                <div class="fototipo-detalhe">Parda clara</div>
+                            </div>
+                            <div class="fototipo-item">
+                                <div class="fototipo-bola" style="background:#b16e49;">IV</div>
+                                <strong>Tipo IV</strong>
+                                <div class="fototipo-detalhe">Parda moderada</div>
+                            </div>
+                            <div class="fototipo-item">
+                                <div class="fototipo-bola" style="background:#8d5a3b;">V</div>
+                                <strong>Tipo V</strong>
+                                <div class="fototipo-detalhe">Parda escura</div>
+                            </div>
+                            <div class="fototipo-item">
+                                <div class="fototipo-bola" style="background:#513527;">VI</div>
+                                <strong>Tipo VI</strong>
+                                <div class="fototipo-detalhe">Negra</div>
+                            </div>
+                        </div>
+                        <p class="text-muted small mt-3">Representação lúdica dos fototipos: uma gradação visual do mais sensível ao mais pigmentado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row justify-content-center mb-5">
+            <div class="col-lg-8">
+                <div class="card shadow border-primary">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3 class="mb-0">Calculadora de Exposição Segura</h3>
+                    </div>
+                    <div class="card-body p-4">
+
+                        <form id="formCalculadora">
+                            <div class="mb-3">
+                                <label for="fototipo" class="form-label fw-bold">1. Qual o seu tipo de pele (Fototipo)?</label>
+                                <select class="form-select" id="fototipo" required>
+                                    <option value="" selected disabled>Selecione uma opção...</option>
+                                    <option value="1">Tipo I - Pele muito clara (Sempre queima, nunca bronzeia)</option>
+                                    <option value="2">Tipo II - Pele clara (Sempre queima, bronzeia muito pouco)</option>
+                                    <option value="3">Tipo III - Pele parda clara (Queima moderadamente, bronzeia gradualmente)</option>
+                                    <option value="4">Tipo IV - Pele parda moderada (Queima pouco, bronzeia facilmente)</option>
+                                    <option value="5">Tipo V - Pele parda escura (Raramente queima, bronzeia muito)</option>
+                                    <option value="6">Tipo VI - Pele negra (Nunca queima, profundamente pigmentada)</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ambiente" class="form-label fw-bold">2. Onde você está exposto ao sol?</label>
+                                <select class="form-select" id="ambiente" required>
+                                    <option value="urbano" selected>Cidade / Grama / Asfalto (Reflexão Padrão)</option>
+                                    <option value="praia">Praia / Areia Clara (Reflete +20% de radiação UV)</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fps" class="form-label fw-bold">3. Fator de Proteção (FPS):</label>
+                                    <input type="number" class="form-control" id="fps" value="30" min="1" max="100" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="indiceUv" class="form-label fw-bold">4. Índice UV Atual da Cidade:</label>
+                                    <input type="number" class="form-control" id="indiceUv" value="11" min="1" max="15" required>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="button" class="btn btn-warning btn-lg fw-bold" onclick="calcularTempo()">Calcular Limite Seguro</button>
+                            </div>
+                        </form>
+
+                        <div id="areaResultado" class="mt-4 text-center d-none">
+                            <hr>
+                            <h4 class="text-secondary">Tempo Máximo Sugerido:</h4>
+                            <p class="resultado-destaque text-danger" id="textoTempo">0 Minutos</p>
+                            <div id="alertaAmbiente" class="text-muted small mb-2 fw-bold"></div>
+                            <div class="alert alert-info mt-3" role="alert">
+                                <strong>Nota Médica:</strong> O sistema limita a exposição máxima contínua a 120 minutos, pois o suor, a água e o atrito exigem a reaplicação do protetor solar após esse período, independentemente do Fototipo.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <div class="card shadow border-success">
+                    <div class="card-header bg-success text-white text-center">
+                        <h3 class="mb-0">Consulta e Comparação de Dados UV</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <ul class="nav nav-tabs nav-justified mb-4" id="abasGrafico" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="aba-diario" data-tipo="diario" type="button" onclick="alterarAba('diario')">Diário</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="aba-semanal" data-tipo="semanal" type="button" onclick="alterarAba('semanal')">Semanal</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="aba-mensal" data-tipo="mensal" type="button" onclick="alterarAba('mensal')">Mensal</button>
+                            </li>
+                        </ul>
+
+                        <div class="aba-conteudo ativa" id="conteudo-diario">
+                            <div class="grafico-container">
+                                <div class="w-100 text-center">
+                                    <h5>Gráfico de Índice UV - Diário</h5>
+                                    <p class="text-muted">Variação do índice ao longo das 24 horas</p>
+                                    <div class="bg-white p-3 rounded shadow-sm mb-3">
+                                        <img src="https://via.placeholder.com/800x250.png?text=Gráfico+Diário+-+Índice+UV+x+Hora" alt="Gráfico diário" class="img-fluid rounded">
+                                    </div>
+
+                                    <div class="row dados-comparacao g-3">
+                                        <div class="col-md-4">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <h6 class="text-primary">Média Histórica</h6>
+                                                    <p class="h4 fw-bold">7,2</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <h6 class="text-info">Valor Estimado</h6>
+                                                    <p class="h4 fw-bold">8,5</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <h6 class="text-danger">Valor Atual</h6>
+                                                    <p class="h4 fw-bold">11,0</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="aba-conteudo" id="conteudo-semanal">
+                            <div class="grafico-container">
+                                <div class="w-100 text-center">
+                                    <h5>Gráfico de Índice UV - Semanal</h5>
+                                    <p class="text-muted">Variação do índice por dia da semana</p>
+                                    <div class="bg-white p-3 rounded shadow-sm mb-3">
+                                        <img src="https://via.placeholder.com/800x250.png?text=Gráfico+Semanal+-+Índice+UV+x+Dia+da+Semana" alt="Gráfico semanal" class="img-fluid rounded">
+                                    </div>
+
+                                    <div class="row dados-comparacao g-3">
+                                        <div class="col-md-4">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <h6 class="text-primary">Média Histórica</h6>
+                                                    <p class="h4 fw-bold">6,8</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <h6 class="text-info">Valor Estimado</h6>
+                                                    <p class="h4 fw-bold">7,9</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <h6 class="text-danger">Média da Semana</h6>
+                                                    <p class="h4 fw-bold">8,3</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="aba-conteudo" id="conteudo-mensal">
+                            <div class="grafico-container">
+                                <div class="w-100 text-center">
+                                    <h5>Gráfico de Índice UV - Mensal</h5>
+                                    <p class="text-muted">Variação do índice por dia do mês</p>
+                                    <div class="bg-white p-3 rounded shadow-sm mb-3">
+                                        <img src="https://via.placeholder.com/800x250.png?text=Gráfico+Mensal+-+Índice+UV+x+Dia+do+Mês" alt="Gráfico mensal" class="img-fluid rounded">
+                                    </div>
+
+                                    <div class="row dados-comparacao g-3">
+                                        <div class="col-md-4">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <h6 class="text-primary">Média Histórica</h6>
+                                                    <p class="h4 fw-bold">8,1</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <h6 class="text-info">Valor Estimado</h6>
+                                                    <p class="h4 fw-bold">9,2</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <h6 class="text-danger">Média do Mês</h6>
+                                                    <p class="h4 fw-bold">9,7</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function calcularTempo() {
+            // 1. Coleta os valores do formulário
+            const fototipoSelecionado = parseInt(document.getElementById('fototipo').value);
+            const ambienteSelecionado = document.getElementById('ambiente').value;
+            const valorFps = parseInt(document.getElementById('fps').value);
+            const valorUv = parseFloat(document.getElementById('indiceUv').value);
+
+            // Validação de segurança
+            if (isNaN(fototipoSelecionado)) {
+                alert("Por favor, selecione o seu tipo de pele.");
+                return;
+            }
+
+            // 2. Tabela de Tolerância Base (DEM) em minutos
+            const temposBase = {
+                1: 60,
+                2: 100,
+                3: 150, // Parda clara
+                4: 200, // Parda moderada
+                5: 300, // Parda escura
+                6: 400
+            };
+
+            // 3. Aplicação do Fator de Albedo (Reflexão Ambiental)
+            // Se estiver na praia, o ambiente potencializa a absorção UV em 20% (fator 1.2)
+            let fatorSuperficie = 1.0;
+            let textoMensagemAmbiente = "Cálculo baseado em reflexão padrão de superfície.";
+            
+            if (ambienteSelecionado === 'praia') {
+                fatorSuperficie = 1.2;
+                textoMensagemAmbiente = "⚠️ Atenção: Tempo reduzido em 20% devido ao reflexo solar na areia da praia (Albedo).";
+            }
+
+            // 4. O Cálculo Matemático Científico Atualizado
+            // O Índice UV efetivo aumenta por conta do reflexo do chão
+            let indiceUvEfetivo = valorUv * fatorSuperficie;
+            
+            let tempoSemProtecao = temposBase[fototipoSelecionado] / indiceUvEfetivo;
+            let tempoComProtecao = tempoSemProtecao * valorFps;
+
+            // Arredonda para um número inteiro amigável
+            let tempoFinal = Math.round(tempoComProtecao);
+
+            // 5. A Restrição Médica das 2 horas
+            if (tempoFinal > 120) {
+                tempoFinal = 120;
+            }
+
+            // 6. Renderização do resultado na tela
+            document.getElementById('textoTempo').innerText = tempoFinal + " Minutos";
+            document.getElementById('alertaAmbiente').innerText = textoMensagemAmbiente;
+            document.getElementById('areaResultado').classList.remove('d-none');
+        }
+
+        // Função para alternar o comportamento visual e lógico das abas de gráficos
+        function alterarAba(tipoAba) {
+            // Remove a classe ativa de todos os botões e conteúdos
+            document.querySelectorAll('#abasGrafico .nav-link').forEach(botao => botao.classList.remove('active'));
+            document.querySelectorAll('.aba-conteudo').forEach(conteudo => conteudo.classList.remove('ativa'));
+
+            // Ativa o botão correto e exibe o respectivo contêiner
+            document.getElementById('aba-' + tipoAba).classList.add('active');
+            document.getElementById('conteudo-' + tipoAba).classList.add('ativa');
+        }
+    </script>
+</body>
+</html>
